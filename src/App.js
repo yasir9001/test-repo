@@ -1,25 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  withRouter,
+} from "react-router-dom";
+import Home from "./components/Home";
+import About from "./components/About";
+import Dashboard from "./Dashboard";
 
-function App() {
+function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <>
+      <div>
+        <p
+          style={
+            props.location.pathname === "/home" ? { backgroundColor: "green" } : {}
+          }
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Link to="/home">Home</Link>
+        </p>
+        <p
+          style={
+            props.location.pathname === "/about" ? { backgroundColor: "green" } : {}
+          }
+        >
+          <Link to="/about">About</Link>
+        </p>
+        <p
+          style={
+            props.location.pathname === "/dashboard"
+              ? { backgroundColor: "green" }
+              : {}
+          }
+        >
+          <Link to="/dashboard">Dashboard</Link>
+        </p>
+      </div>
+      <Switch>
+        <Route path="/home" component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Redirect exact from="/" to="/dashboard" />
+        <Route path="*" component={() => <div>404 not found</div>} />
+      </Switch>
+    </>
   );
 }
 
-export default App;
+export default withRouter(App);
